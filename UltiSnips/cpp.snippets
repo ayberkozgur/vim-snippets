@@ -8,50 +8,61 @@ priority -49
 ###########################################################################
 #                            TextMate Snippets                            #
 ###########################################################################
-snippet beginend "$1.begin(), $1.end() (beginend)"
-${1:v}${1/^.*?(-)?(>)?$/(?2::(?1:>:.))/}begin(), $1${1/^.*?(-)?(>)?$/(?2::(?1:>:.))/}end()
-endsnippet
 
-snippet cl "class .. (class)"
-class ${1:`!p snip.rv = snip.basename or "name"`}
-{
-public:
-	${1/(\w+).*/$1/} (${2:arguments});
-	virtual ~${1/(\w+).*/$1/} ();
-
-private:
-	${0:/* data */}
-};
-endsnippet
-
-snippet ns "namespace .. (namespace)"
-namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
-{
-	${VISUAL}${0}
-}${1/.+/ \/* /m}$1${1/.+/ *\/ /m}
-endsnippet
-
-snippet readfile "read file (readF)"
-std::vector<char> v;
-if (FILE *fp = fopen(${1:"filename"}, "r"))
-{
-	char buf[1024];
-	while(size_t len = fread(buf, 1, sizeof(buf), fp))
-		v.insert(v.end(), buf, buf + len);
-	fclose(fp);
+snippet foreach "for(type var : container){ ... }"
+for(${1:auto} ${2:i} : ${3:container}){
+	$0
 }
 endsnippet
 
-snippet map "std::map (map)"
-std::map<${1:key}, ${2:value}> map$0;
+snippet enum "enum class Enumname{ ... };" b
+enum class ${1:Enumname}{
+	$0
+};
 endsnippet
 
-snippet vector "std::vector (v)"
-std::vector<${1:char}> v$0;
+snippet enummember "ENUMMEMBER, ///< @brief " b
+${1:ENUMMEMBER}, ///< @brief $0
 endsnippet
 
-snippet tp "template <typename ..> (template)"
-template <typename ${1:_InputIter}>
+snippet class "class Classname{ ... };" b
+/**
+ * @brief $0
+ */
+class ${1:Classname}{
+public:
+
+	/**
+	 * @brief 
+	 */
+	$1(${2});
+
+	/**
+	 * @brief Default destructor
+	 */
+	virtual ~$1();
+
+private:
+
+	
+};
+endsnippet
+
+snippet member "type var; ///< @brief" b
+${1:int} ${2:name}; ///< @brief $0
+endsnippet
+
+snippet namespace "namespace nsname{ ... } /* End of namespace nsname */" b
+/**
+ * @brief $0
+ */
+namespace ${1:nsname}{
+	${VISUAL}
+}${1/.+/ \/* /m}End of namespace $1${1/.+/ *\/ /m}
+endsnippet
+
+snippet vector "std::vector<type> var;" b
+std::vector<${1:type}> $0;
 endsnippet
 
 # vim:ft=snippets:
